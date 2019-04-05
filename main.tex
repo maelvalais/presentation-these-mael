@@ -131,7 +131,7 @@ $\bigwedge\limits_{\substack{i \in [1..1000]}} x_i$ &
 \textbf{But technique} : développer un outil doté : 
 \begin{itemize}
 \item[\plus] d'un langage intuitif pour la modélisation, bien documenté
-\item[\plus] d'une interface graphique abordable
+\item[\plus] d'une interface graphique conviviale
 \end{itemize}
 \textbf{But académique} : apporter une aide dans le domaine de
 \begin{itemize}
@@ -177,7 +177,7 @@ La conclusion est-elle justifiée ?
 \begin{frame}{\subsecname}
 \begin{center}\textbf{Étape 2} : poser le problème\end{center}
 \begin{block}{Théorème}
-\[\{H_1, H_2\} \models C \mbox{ si et seulement si } \{H_1, H_2\} \cup \{\neg C\} \text{insatisfiable}\]
+\[\{H_1, \dots, H_n\} \models C \mbox{ ssi } \{H_1, \dots, H_n\} \cup \{\neg C\}\text{ insatisfiable}\]
 \end{block}
 \makebox[\textwidth]{\includegraphics[width=0.95\paperwidth]{figures/intro-logique-2.pdf}}
 \end{frame}
@@ -251,26 +251,6 @@ TouIST permet de choisir le solveur à cibler. Le langage d'entrée s'adapte à 
 \end{frame}
 
 \begin{frame}[containsverbatim]{\subsecname}
-Langage d'entrée de TouIST :
-\begin{itemize}
-    \item \alert{variables} et \alert{ensembles} \\[5pt]
-    \begin{small}\begin{verbatim}
-  $N = 5
-  $Lignes = [1..$N]
-  $Pays = [France, Italie, Espagne]
-    \end{verbatim}\end{small}
-    \item \alert{connecteurs généralisés} \\[5pt]
-    \begin{small}\begin{verbatim}
-  en(France) and en(Italie) and en(Espagne)
-
-  bigand $p in $Pays:
-    en($p)
-  end
-    \end{verbatim}\end{small}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[containsverbatim]{\subsecname}
 Solveurs compatibles :
 \begin{table}
     \centering
@@ -339,8 +319,28 @@ forall b: a and b
     \item[] QF-IDL = Quantifier-Free Integer Difference Logic
     \item[] QF-RDL = Quantifier-Free Real Difference Logic
 \end{itemize}
-
 \end{scriptsize}
+\end{frame}
+
+
+\begin{frame}[containsverbatim]{\subsecname}
+Langage d'entrée de TouIST :
+\begin{itemize}
+    \item \alert{variables} et \alert{ensembles} \\[5pt]
+    \begin{small}\begin{verbatim}
+  $N = 5
+  $Lignes = [1..$N]
+  $Pays = [France, Italie, Espagne]
+    \end{verbatim}\end{small}
+    \item \alert{connecteurs généralisés} \\[5pt]
+    \begin{small}\begin{verbatim}
+  en(France) and en(Italie) and en(Espagne)
+
+  bigand $p in $Pays:
+    en($p)
+  end
+    \end{verbatim}\end{small}
+\end{itemize}
 \end{frame}
 
 
@@ -428,7 +428,7 @@ S'écrit en TouIST :
 \begin{small}
 \begin{verbatim}
 bigor $k in $Valeurs:
-  p($i,$j,$k)
+  p(1,4,$k)
 end
 \end{verbatim}
 \end{small}
@@ -436,7 +436,7 @@ end
 
 \begin{frame}[containsverbatim]{\subsecname. Étape 2 : règles}
 \begin{exampleblock}{Règle 2}
-Si la case (1,4) a pour valeur 3, alors aucune autre valeur n'est sélectionnée.
+Si la case (1,4) a pour valeur 3, alors elle n'a aucune autre valeur différente.
 \end{exampleblock}
 \[\texttt{p(1,4,\hl{3})} \rightarrow \bigwedge_{\substack{k\in [1..9] \\ k\neq 3}} \neg \texttt{p(1,4,\hl{k})} \]
 S'écrit en TouIST :
@@ -488,7 +488,7 @@ end
 \begin{column}{0.7\textwidth}
 \begin{exampleblock}{Règles du jeu}
 \begin{itemize}
-\item 2 joueurs, {\color{ForestGreen}humain} et {\color{red}machine}.
+\item 2 joueurs, {\color{ForestGreen}vert} et {\color{red}rouge}.
 \item Chacun son tour ($t \in T$), un joueur prend 1 à 2 allumettes ($n \in A$).
 \item Si un joueur ne peut plus jouer, il a perdu.
 \end{itemize}
@@ -502,16 +502,16 @@ $\longrightarrow$ Et si on gagnait à \textbf{tous les coups} ?
 
 \begin{frame}[containsverbatim]{\subsecname}
 \begin{exampleblock}{Règle 1 : \enquote{gagner}}
-L'{\color{ForestGreen}humain} gagne ssi il n'existe aucun tour tel que c'est à lui de jouer et il ne reste aucune allumette.
+L'{\color{ForestGreen}vert} gagne ssi il n'existe aucun tour tel que c'est à lui de jouer et il ne reste aucune allumette.
 \end{exampleblock}
 \[
-humain\_gagne \leftrightarrow \neg \bigvee_{\substack{t \in T\\t > 0}}
-tour\_de\_humain(t) \wedge reste(t,\alert{0})
+vert\_gagne \leftrightarrow \neg \bigvee_{\substack{t \in T\\t > 0}}
+tour\_de\_vert(t) \wedge reste(t,\alert{0})
 \]
 \begin{verbatim}
-humain_gagne <=>
+vert_gagne <=>
 not bigor $t in $T when $t>0:
- tour_de_humain($t) and reste($t,0)
+ tour_de_vert($t) and reste($t,0)
 end
 \end{verbatim}
 \end{frame}
@@ -558,18 +558,18 @@ end
 \end{frame}
 
 \begin{frame}{\subsecname}
-Arbre de jeu décrivant une partie
-\makebox[\textwidth]{\includegraphics[width=\textwidth]{figures/nim-arbre-1.pdf}}
+Arbre de jeu décrivant toutes les parties possibles
+\makebox[\textwidth]{\includegraphics[width=0.95\paperwidth]{figures/nim-arbre-1.pdf}}
 \end{frame}
 
 \begin{frame}{\subsecname}
-Arbre ET/OU
-\makebox[\textwidth]{\includegraphics[width=\textwidth]{figures/nim-arbre-2.pdf}}
+Arbre ET/OU correspondant
+\makebox[\textwidth]{\includegraphics[width=0.95\paperwidth]{figures/nim-arbre-2.pdf}}
 \end{frame}
 
 
 \begin{frame}{\subsecname}
-Trouver la stratégie gagnante pour le {\color{ForestGreen}joueur humain} (s'il y en a une)
+Trouver la stratégie gagnante pour le {\color{ForestGreen}joueur vert} (s'il y en a une)
 \begin{itemize}
     \item SAT = taille formule exponentielle
     \item QBF = taille formule linéaire
@@ -577,11 +577,11 @@ Trouver la stratégie gagnante pour le {\color{ForestGreen}joueur humain} (s'il 
 \end{frame}
 
 \begin{frame}{\subsecname}
-\makebox[\textwidth]{\includegraphics[width=\textwidth]{figures/nim-arbre-3.pdf}}
+\makebox[\textwidth]{\includegraphics[width=0.95\paperwidth]{figures/nim-arbre-3.pdf}}
 \end{frame}
 
 \begin{frame}{\subsecname}
-\makebox[\textwidth]{\includegraphics[width=\textwidth]{figures/nim-arbre-4.pdf}}
+\makebox[\textwidth]{\includegraphics[width=0.95\paperwidth]{figures/nim-arbre-4.pdf}}
 \end{frame}
 
 \begin{frame}
@@ -589,7 +589,7 @@ Trouver la stratégie gagnante pour le {\color{ForestGreen}joueur humain} (s'il 
 \tableofcontents[currentsection,subsectionstyle=show/show/hide]
 \end{frame}
 
-\subsection{Planification classique ?}
+\subsection{Planification classique (SAT)}
 \begin{frame}{\subsecname}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.45\textwidth}\centering
@@ -602,9 +602,9 @@ But\\
 \end{column}
 \end{columns}
 \begin{itemize}
-    \item Partir de l'\textbf{état initial}
-    \item Arriver à un état qui satisfait le \textbf{but}
-    \item À partir d'\textbf{actions} {\scriptsize{}(plusieurs actions possibles par étape)} \\[10pt]
+    \item Partir de l'\textbf{état initial} $I$
+    \item Arriver à un état qui satisfait le \textbf{but} $G$
+    \item À partir d'\textbf{actions} $A$ {\scriptsize{}(plusieurs actions possibles par étape)} \\[10pt]
 \begin{small}\begin{tabular}{l|l}
     PICK(balle1, salleA, gauche) & ramasser balle dans main gauche \\
     PICK(balle1, salleA, droit) & ramasser balle dans main gauche \\[5pt]
@@ -615,18 +615,6 @@ But\\
 \end{itemize}
 \end{frame}
 
-\begin{frame}
-Pourquoi exploiter QBF pour la planification ?
-\begin{itemize}
-\item Un \textbf{article prometteur}, \cite{DBLP:conf/ecai/CashmoreFG12}
-\item les compétitions des solveurs QBF attirent \textbf{de plus en plus l'attention}
-\item \textsc{Satplan}~ gagne les compétitions IPC'04 et IPC'06 \nocite{KAU04,KSH06} grâce aux amélioration des solveurs SAT \textbf{provoquées par les compétitions}
-\end{itemize}
-
-\begin{center}
-$\longrightarrow$ les solveurs QBF deviennent de plus en plus performants
-\end{center}
-\end{frame}
 
 \begin{frame}{\subsecname}
 \begin{block}{Définition}
@@ -641,14 +629,36 @@ Plan = séquence d'\textbf{étapes} constituées d'\textbf{actions}.
 \makebox[\textwidth]{\includegraphics[width=0.98\paperwidth]{figures/coplas2018/planif-tree-1.pdf}}
 \end{frame}
 
-\begin{frame}
-\makebox[\textwidth]{\includegraphics[width=0.9\paperwidth]{figures/coplas2018/planif-tree-2a.pdf}}    
+\begin{frame}{\subsecname}
+\textbf{Étape 1} : traduire le problème de planification en problème SAT \\[5pt]
+\makebox[\textwidth]{\includegraphics[width=0.8\paperwidth]{figures/coplas2018/planif-tree-2a.pdf}}
 \end{frame}
-\begin{frame}
-\makebox[\textwidth]{\includegraphics[width=0.9\paperwidth]{figures/coplas2018/planif-tree-2b.pdf}}    
+\begin{frame}{\subsecname}
+\textbf{Étape 1} : traduire le problème de planification en problème SAT \\[5pt]
+\makebox[\textwidth]{\includegraphics[width=0.8\paperwidth]{figures/coplas2018/planif-tree-2b.pdf}}    
 \end{frame}
-\begin{frame}
-\makebox[\textwidth]{\includegraphics[width=0.9\paperwidth]{figures/coplas2018/planif-tree-2c.pdf}}    
+\begin{frame}{\subsecname}
+\textbf{Étape 1} : traduire le problème de planification en problème SAT \\[5pt]
+\makebox[\textwidth]{\includegraphics[width=0.8\paperwidth]{figures/coplas2018/planif-tree-2c.pdf}}    
+\end{frame}
+
+\begin{frame}{\subsecname}
+On représente l'ensemble des plans de longueur $< 7$ par : \\[10pt]
+\includegraphics[width=1\textwidth]{figures/coplas2018/planif-tree-3a.pdf}
+\end{frame}
+
+\subsection{Planification classique (QBF)}
+
+\begin{frame}{\subsecname}
+\textbf{Étape 2} : passage en QBF \\[10pt]
+Pourquoi exploiter QBF pour la planification ?
+\begin{itemize}
+\item les compétitions des solveurs QBF attirent \textbf{de plus en plus l'attention}
+\item \textsc{Satplan}~ gagne les compétitions IPC'04 et IPC'06 \nocite{KAU04,KSH06} grâce aux amélioration des solveurs SAT \textbf{provoquées par les compétitions}
+\end{itemize}
+\begin{center}
+$\longrightarrow$ les solveurs QBF deviennent de plus en plus performants
+\end{center}
 \end{frame}
 
 
@@ -659,30 +669,28 @@ Plan = séquence d'\textbf{étapes} constituées d'\textbf{actions}.
 \end{figure}
 \end{frame}
 
-\begin{frame}
-\begin{center}\includegraphics[width=1\textwidth]{figures/coplas2018/planif-tree-2.pdf}\end{center}
+\begin{frame}{\subsecname}
+\begin{center}\includegraphics[width=1\textwidth]{figures/coplas2018/planif-tree-3b.pdf}\end{center}
 $\longrightarrow$ Théoriquement, beaucoup \textbf{moins de mémoire} utilisée.
 \end{frame}
 
 
-\subsection{Exemple : le robot Gripper (planification QBF)}
-
 \begin{frame}{\subsecname}
-\begin{figure}[h]\label{gripper3:qbf-efa}
+\textbf{Étape 3} : exemple de plan retourné et lecture de l'arbre\\
+\begin{figure}
 \begin{footnotesize}\input{figures/gripper3.tex}\end{footnotesize}
-\caption{Transitions du plan en 7 étapes retourné par \touistplan{} pour le problème Gripper-3 (codage d'arbre compact QBF (CTE) de profondeur 2 dans les espaces d'états avec frame-axiomes explicatifs}
 \end{figure}
-Parcours infixe pour parcourir le plan.
+Transitions du plan en 7 étapes retourné par \touistplan{} (codage d'arbre compact QBF (CTE) de profondeur 2 dans les espaces d'états avec frame-axiomes explicatifs)
 \end{frame}
 
+\subsection{Contribution : nouveaux codages pour résolution rapide}
 
-
-\begin{frame}
-En pratique :
+\begin{frame}{\subsecname}
+Travail de référence de \cite{DBLP:conf/ecai/CashmoreFG12} :
 \begin{itemize}
 \item En SAT, No-ops est la meilleure transition disponible
 \includegraphics[width=0.6\textwidth]{figures/coplas2018/cashmore.png}
-\item En QBF, No-ops utilise \textbf{5 $ \times $ moins de mémoire} mais \textbf{30 $ \times $ plus lent} (\cite{DBLP:conf/ecai/CashmoreFG12})
+\item En QBF, No-ops utilise \textbf{5 $ \times $ moins de mémoire} mais \textbf{30 $ \times $ plus lent}
 \end{itemize}
 \end{frame}
 
@@ -690,31 +698,32 @@ En pratique :
 
 
 
-\begin{frame}
-\begin{exampleblock}{Question...}
-Trouver meilleurs codages basés sur le CTE ?
+\begin{frame}{\subsecname}
+\begin{exampleblock}{Objectif}
+Peut-on trouver de meilleurs codages basés sur le CTE de Cashmore ?
 \end{exampleblock}
 \begin{alertblock}{Note}
 Travail au niveau de l'encodage, {\color{red} pas au niveau solveur}
 \end{alertblock}
+% \\[3cm]
+% \begin{itemize}\scriptsize{}
+%     \item[] CTE = Compact Tree Encoding = concept d'avoir un \enquote{état} par nœud
+% \end{itemize}
 \end{frame}
 
 
-\subsection{Contribution : nouveaux codages pour résolution rapide}
-
-\begin{frame}
-\includegraphics[width=1\textwidth]{figures/coplas2018/cte-encodings-1.pdf}
+\begin{frame}{\subsecname}
+\makebox[\textwidth]{\includegraphics[width=0.95\paperwidth]{figures/coplas2018/cte-encodings-1.pdf}}
 \end{frame}
-\begin{frame}
-\includegraphics[width=1\textwidth]{figures/coplas2018/cte-encodings-2.pdf}
+\begin{frame}{\subsecname}
+\makebox[\textwidth]{\includegraphics[width=0.95\paperwidth]{figures/coplas2018/cte-encodings-2.pdf}}
 \end{frame}
-\begin{frame}
-\includegraphics[width=1\textwidth]{figures/coplas2018/cte-encodings-3.pdf}
+\begin{frame}{\subsecname}
+\makebox[\textwidth]{\includegraphics[width=0.95\paperwidth]{figures/coplas2018/cte-encodings-3.pdf}}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{\subsecname}
 \begin{itemize}
-
 \item Utilise les domaines 1 à 8 des IPC (International  Planning Competition)
 \item Solveurs QBF testés : RaREQS, DepQBF, Qute (Quantor trop lent)
 \item {\color{red}6000 heures} de calcul (2112 problèmes à travers 3 solveurs)
@@ -728,49 +737,44 @@ Travail au niveau de l'encodage, {\color{red} pas au niveau solveur}
 \end{frame}
 
 
-\begin{frame}
-Temps entre codages CTE pour le problème \textit{"y a-t-il un plan ?"} :
-
-\includegraphics[width=0.5\textwidth]{figures/coplas2018/time-plansat-efa-noop3.pdf}
+\begin{frame}{\subsecname}
+Temps entre codages CTE pour le problème \textit{"y a-t-il un plan ?"} :\\
 \includegraphics[width=0.5\textwidth]{figures/coplas2018/time-plansat-open-noop3.pdf}
-
+\includegraphics[width=0.5\textwidth]{figures/coplas2018/time-plansat-efa-noop3.pdf}
+\vspace{-0.3cm}
 \begin{columns}
-\begin{column}{0.5\textwidth}
-\begin{center}
-CTE-OPEN est \textbf{1.7$\times$ plus rapide}
-\end{center}
-\end{column}
-\begin{column}{0.5\textwidth}
-\begin{center}
+\begin{column}{0.5\textwidth}\begin{center}
 CTE-EFA est \textbf{2$\times$ plus rapide}
-\end{center}
-\end{column}
+\end{center}\end{column}
+\begin{column}{0.5\textwidth}\begin{center}
+CTE-OPEN est \textbf{1.7$\times$ plus rapide}
+\end{center}\end{column}
 \end{columns}
-
-\begin{small}\begin{center}
+\vspace{-0.2cm}
+\begin{center}\small{}
 (comparé à CTE-NOOP)
-\end{center} \end{small}
+\end{center}
 \begin{center}
 De 30$\times$ à \textbf{seulement 15$\times$ moins rapide} que \textsc{Satplan}!
 \end{center}
 \end{frame}
 
-\begin{frame}
-\textbf{Petit souci technique}: on ne peut gérer qu'une profondeur de 3, càd \textbf{un plan d'une longueur de 15 étapes maximum} !
+\begin{frame}{\subsecname}
+\textbf{Limites} : \textbf{plan de longueur 15 au plus}
 \begin{exampleblock}{Solution implémentée}
-\includegraphics[width=\textwidth]{figures/coplas2018/planif-tree-5.pdf}
+\includegraphics[width=0.9\textwidth]{figures/coplas2018/planif-tree-5.pdf}
 \end{exampleblock}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{\subsecname}
 Des métriques pour \textbf{expliquer} cette amélioration \textbf{$2\times$} ?
 \begin{itemize}
 \item Nombre de littéraux et nombre de clauses
-\item Ratio entre les types de transitions (contraintes \textbf{branches} sur contraintes \textbf{nœuds})
+\item Ratio entre les types de transitions
 \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{\subsecname}
 \begin{small}\begin{table} \centering
 \begin{tabular}{@{}lccccc@{}}
 \toprule
@@ -782,8 +786,8 @@ CTE-OPEN & 445 (21\%) & -41\% & -2\% & -28\% & 17\% \\ \bottomrule \\
 \end{table}\end{small}
 Pas vraiment utile :
 \begin{itemize}
-\item Nombre de littéraux et nombre de clauses: {\color{red}pas de corrélation}
-\item Types de transitions (nœuds/branches): {\color{red}pas de corrélation}
+\item Nombre de littéraux et de clauses: {\color{red}pas de corrélation}
+\item Types de transitions : {\color{red}pas de corrélation}
 \end{itemize}
 \end{frame}
 
@@ -794,7 +798,7 @@ Pas vraiment utile :
 \textbf{Contributions liées à TouIST} :
 
 \begin{itemize}
-    \item Un outil et un langage, TouIST, améliorant l'expressivité pour utiliser les solveurs SAT, SMT et QBF pour l'enseignement et la recherche
+    \item Un outil et un langage, TouIST, améliorant l'expressivité pour utiliser les solveurs SAT, SMT et QBF
     \item aide pour l'enseignement de la logique à l'université
     \begin{itemize} 
         \item[\plus] Étudiants de licence de l'Université Paul Sabatier
@@ -802,8 +806,8 @@ Pas vraiment utile :
     \end{itemize}
     \item aide pour la recherche
     \begin{itemize} 
-        \item[\plus] Codages pour la planification (IRIT, Toulouse)
-        \item[\plus] Modélisation pour raisonnement épistémique (IRISA, Rennes)
+        \item[\plus] Codages pour la planification (Toulouse)
+        \item[\plus] Modélisation pour raisonnement épistémique (Rennes)
     \end{itemize}
 \end{itemize}
 \end{frame}
@@ -812,8 +816,8 @@ Pas vraiment utile :
 
 \textbf{Contributions liées à la planification QBF} :
 \begin{itemize}
-\item[\plus] Un moyen systématique de \textbf{traduire les codages} depuis SAT vers QBF
-\item[\plus] Par conséquence, deux nouveaux codage \textbf{plus performants que l'existant} (CTE-NOOP)
+\item[\plus] Une traduction systématique de codages depuis SAT vers QBF
+\item[\plus] Deux nouveaux codages CTE-EFA et CTE-OPEN \textbf{plus performants que l'existant} (CTE-NOOP)
 \item[\plus] Contribution d'un \textbf{large ensemble de benchmarks} générés à partir des problèmes IPC
 \end{itemize}
 \end{frame}
@@ -821,10 +825,10 @@ Pas vraiment utile :
 \begin{frame}{Perspectives}
 \textbf{Perpectives liées à TouIST} :
 \begin{itemize}
-\item Finaliser TouIST "pour le web" pour favoriser l'adoption
+\item Finaliser TouIST \enquote{pour le web} pour favoriser sa diffusion
 \item utiliser TouIST pour la \textbf{planification épistémique} (DL-PA)
 \item utiliser TouIST pour améliorer les performance de \textbf{LoTREC} (solveur de logiques modales)
-\item utiliser TouIST pour améliorer \textbf{SESAME} (écriture de sémantiques argumentatives)
+\item interfacer TouIST à \textbf{SESAME} (domaine de l'argumentation)
 \end{itemize}
 \end{frame}
 
@@ -834,6 +838,11 @@ Pas vraiment utile :
 \item \textbf{Publication} de nos nouveaux benchmarks (à \textsc{QBFEVAL}) pour pousser les solveurs QBF à s'améliorer/se spécialiser dans ce domaine
 \item Trouver \textbf{de meilleures métriques} permettant d'expliquer les améliorations et pouvoir les exploiter
 \end{itemize}
+\end{frame}
+
+\begin{frame}{}
+Merci \\
+\makebox[\textwidth]{\includegraphics[width=\paperwidth]{figures/irit.fr-touist2.png}}
 \end{frame}
 
 \bibliographystyle{apalike}
