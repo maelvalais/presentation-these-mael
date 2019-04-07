@@ -1,5 +1,10 @@
 # Notes pour ma présentation
 
+Ma soutenance a eu lieu le lundi 8 avril 2019 à 10h, salle des thèses
+à l'IRIT.
+
+## Éditer les `.pdf` avec Ipe
+
 La plupart des `.pdf` avec des schémas sont ouvrables en utilisant
 Ipe <http://ipe.otfried.org/>. Ipe est une sorte de Inkscape beaucoup
 plus simple et incluant l'écriture Latex. Ipe est toujours maintenu en 2019
@@ -20,5 +25,4 @@ Pourquoi ne pas avoir utilisé un autre outil ?
   dans la présentation : bof bof car closed-source et souvent pas pérenne.
 - TikZ : cool car c'est du pur latex donc pas de dépendances externes. Mais
   courbe d'apprentissage trop élevée.
-
 
