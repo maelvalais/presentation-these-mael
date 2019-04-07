@@ -1,5 +1,7 @@
 # Notes pour ma présentation
 
+Ma soutenance a eu lieu le lundi 8 avril 2019 à 10h, salle des thèses
+à l'IRIT.
 
 | ![1]  | ![2]  |
 |---|---|
@@ -9,9 +11,6 @@
 [2]: https://user-images.githubusercontent.com/2195781/55681540-c712b780-5927-11e9-831d-d712bf967f59.jpg
 [3]: https://user-images.githubusercontent.com/2195781/55681541-c712b780-5927-11e9-8725-a0cf854926d4.jpg
 [4]: https://user-images.githubusercontent.com/2195781/55681539-c712b780-5927-11e9-85dd-461a3b93f32b.jpg
-
-Ma soutenance a eu lieu le lundi 8 avril 2019 à 10h, salle des thèses
-à l'IRIT.
 
 ## Éditer les `.pdf` avec Ipe
 
