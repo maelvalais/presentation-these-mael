@@ -1,7 +1,7 @@
 # Notes pour ma présentation
 
-Ma soutenance a eu lieu le lundi 8 avril 2019 à 10h, salle des thèses
-à l'IRIT.
+Ma soutenance a eu lieu le lundi 8 avril 2019 à 10h, salle des thèses à l'IRIT
+([PDF de la présentation](https://github.com/maelvalais/presentation-these-mael/raw/master/presentation_these_mael.pdf))
 
 | ![1]  | ![2]  |
 |---|---|
